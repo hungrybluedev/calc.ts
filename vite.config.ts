@@ -18,7 +18,7 @@ export default defineConfig({
           "A simple calculator made with React, TypeScript, and Vite",
         theme_color: "#9236ed",
         background_color: "#00acc1",
-        display: "minimal-ui",
+        display: "fullscreen",
         orientation: "portrait",
         scope: "/",
         start_url: "/",
