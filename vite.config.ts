@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globPatterns: ["**/*{js,css,html,png}"],
+      },
       manifest: {
         name: "Simple Calculator",
         short_name: "Calculator",
