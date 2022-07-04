@@ -3,6 +3,7 @@ export enum ArithmeticOperation {
   subtraction,
   multiplication,
   division,
+  evaluation,
 }
 
 export const OP_MAP: Map<string, ArithmeticOperation> = new Map([

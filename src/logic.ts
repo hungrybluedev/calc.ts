@@ -41,10 +41,19 @@ export default function calculatorReducer(
       }
 
       // We now have a regular digit
-      return {
-        ...state,
-        currentOperand: `${state.currentOperand || ""}${payload!.digit}`,
-      };
+
+      // Did we just finish a
+      if (state.operation === ArithmeticOperation.evaluation) {
+        return {
+          ...state,
+          currentOperand: payload!.digit,
+          operation: undefined,
+        };
+      } else
+        return {
+          ...state,
+          currentOperand: `${state.currentOperand || ""}${payload!.digit}`,
+        };
 
     case ActionType.choose_operation:
       if (
@@ -114,7 +123,7 @@ export default function calculatorReducer(
         currentOperand: evaluate(state),
         previousOperand: "",
         opSymbol: "",
-        operation: undefined,
+        operation: ArithmeticOperation.evaluation,
       };
 
     default:
