@@ -68,6 +68,13 @@ function App() {
       >
         =
       </button>
+      <div className="footer">
+        <p>
+          Made with ❤️ by Subhomoy Haldar (
+          <a href="https://hungrybluedev.in/">@hungrybluedev</a>)
+        </p>
+        <p>&copy; 2022</p>
+      </div>
     </div>
   );
 }
