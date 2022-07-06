@@ -23,8 +23,11 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm test
-      - run: npm run coverage
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.REPORTER_ID}}
+        with:
+          coverageCommand: npm run coverage
+          coverageLocations: |
+            ${{github.workspace}}/coverage/lcov.info:lcov
