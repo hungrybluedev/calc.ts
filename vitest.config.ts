@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     includeSource: ["src/**/*.ts"],
     coverage: {
-      reporter: ["text", "html-spa"],
+      reporter: ["text", "html-spa", "lcov"],
     },
   },
 });
