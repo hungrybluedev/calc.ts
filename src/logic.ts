@@ -132,15 +132,11 @@ export default function calculatorReducer(
 }
 
 const evaluate = ({
-  currentOperand,
   previousOperand,
+  currentOperand,
   operation,
 }: AppState): string => {
   // Take care of the trivial edge cases
-  if (!previousOperand && currentOperand) {
-    return currentOperand;
-  }
-
   if (!currentOperand && previousOperand) {
     return previousOperand;
   }
@@ -148,6 +144,9 @@ const evaluate = ({
   if (!currentOperand && !previousOperand) {
     return "0";
   }
+
+  previousOperand = previousOperand || "0";
+  currentOperand = currentOperand || "0";
 
   switch (operation) {
     case ArithmeticOperation.addition:
@@ -188,8 +187,8 @@ if (import.meta.vitest) {
       for (const currentCase of cases) {
         expect(
           evaluate({
-            currentOperand: currentCase[0],
-            previousOperand: currentCase[1],
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
             operation: ArithmeticOperation.addition,
           })
         ).toEqual("0");
@@ -206,8 +205,8 @@ if (import.meta.vitest) {
       for (const currentCase of cases) {
         expect(
           evaluate({
-            currentOperand: currentCase[0],
-            previousOperand: currentCase[1],
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
             operation: ArithmeticOperation.addition,
           })
         ).toEqual(currentCase[2]);
@@ -228,8 +227,8 @@ if (import.meta.vitest) {
       for (const currentCase of cases) {
         expect(
           evaluate({
-            currentOperand: currentCase[0],
-            previousOperand: currentCase[1],
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
             operation: ArithmeticOperation.addition,
           })
         ).toEqual(currentCase[2]);
@@ -250,8 +249,8 @@ if (import.meta.vitest) {
       for (const currentCase of cases) {
         expect(
           evaluate({
-            currentOperand: currentCase[0],
-            previousOperand: currentCase[1],
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
             operation: ArithmeticOperation.addition,
           })
         ).toEqual(currentCase[2]);
@@ -270,9 +269,47 @@ if (import.meta.vitest) {
       for (const currentCase of cases) {
         expect(
           evaluate({
-            currentOperand: currentCase[0],
-            previousOperand: currentCase[1],
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
             operation: ArithmeticOperation.addition,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+  });
+
+  describe("evaluate subtraction", () => {
+    it("should work with zero operands", () => {
+      const cases = [
+        ["", ""],
+        ["0", "0"],
+        ["0", ""],
+        ["", "0"],
+      ];
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
+            operation: ArithmeticOperation.subtraction,
+          })
+        ).toEqual("0");
+      }
+    });
+
+    it("should work with one operand", () => {
+      const cases = [
+        ["1", "", "1"],
+        ["", "23", "-23"],
+        ["", "-45", "45"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
+            operation: ArithmeticOperation.subtraction,
           })
         ).toEqual(currentCase[2]);
       }
