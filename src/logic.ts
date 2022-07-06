@@ -167,3 +167,49 @@ const evaluate = (state: AppState): string => {
       return "";
   }
 };
+
+if (import.meta.vitest) {
+  const { describe, expect, it } = import.meta.vitest;
+
+  describe("evaluate addition", () => {
+    it("should work with zero operands", () => {
+      const cases = [
+        ["", ""],
+        ["0", "0"],
+        ["0", ""],
+        ["", "0"],
+      ];
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            currentOperand: currentCase[0],
+            previousOperand: currentCase[1],
+            operation: ArithmeticOperation.addition,
+          })
+        ).toEqual("0");
+      }
+    });
+
+    it("should work with positive integers", () => {
+      const cases = [
+        ["1", "1", "2"],
+        ["1", "2", "3"],
+        ["2", "3", "5"],
+        ["3", "5", "8"],
+        ["5", "8", "13"],
+        ["13", "8", "21"],
+        ["213149", "350174", "563323"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            currentOperand: currentCase[0],
+            previousOperand: currentCase[1],
+            operation: ArithmeticOperation.addition,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+  });
+}
