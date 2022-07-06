@@ -314,5 +314,68 @@ if (import.meta.vitest) {
         ).toEqual(currentCase[2]);
       }
     });
+
+    it("should work with positive integers", () => {
+      const cases = [
+        ["1", "1", "0"],
+        ["1", "2", "-1"],
+        ["2", "3", "-1"],
+        ["3", "5", "-2"],
+        ["5", "8", "-3"],
+        ["13", "8", "5"],
+        ["213149", "350174", "-137025"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
+            operation: ArithmeticOperation.subtraction,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+
+    it("should work with negative integers", () => {
+      const cases = [
+        ["-1", "-1", "0"],
+        ["-1", "-2", "1"],
+        ["-2", "-3", "1"],
+        ["-3", "-5", "2"],
+        ["-5", "-8", "3"],
+        ["-13", "-8", "-5"],
+        ["-213149", "-350174", "137025"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
+            operation: ArithmeticOperation.subtraction,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+
+    it("should work with large integers", () => {
+      const cases = [
+        ["7342457798196", "79879841131", "7262577957065"],
+        ["798783246", "3245456167", "-2446672921"],
+        ["-876139141", "-787139946", "-88999195"],
+        ["5134761984618", "4138765478156", "995996506462"],
+        ["974125831765", "1451451214", "972674380551"],
+      ];
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            previousOperand: currentCase[0],
+            currentOperand: currentCase[1],
+            operation: ArithmeticOperation.subtraction,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
   });
 }
