@@ -3,15 +3,16 @@
 <div align="center" style="align: center; margin: 20px auto;">
 <a href="https://calc.hbdsites.link">Try it! 🚀</a> | 
 <a href="https://hungrybluedev.in">Website 🌐</a> | 
-<a href="https://github.com/sponsors/hungrybluedev">Sponsor 🤝</a>
+<a href="https://github.com/sponsors/hungrybluedev">Sponsor 🤝</a> |
+<a href="https://twitter.com/hungrybluedev">Twitter 🐦</a>
 </div>
 
 <div align="center" style="align: center; margin: 20px auto;">
 <a href="https://codeclimate.com/github/hungrybluedev/calc.ts"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/hungrybluedev/calc.ts"></a>
+<a href="https://codeclimate.com/github/hungrybluedev/calc.ts"><img alt="Code Climate coverage" src="https://img.shields.io/codeclimate/coverage/hungrybluedev/calc.ts"></a>
 <a href="https://github.com/hungrybluedev/calc.ts/issues">
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/hungrybluedev/calc.ts"></a>
 <a href="https://github.com/hungrybluedev/calc.ts/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/hungrybluedev/calc.ts"></a>
-<a href="https://twitter.com/hungrybluedev"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/hungrybluedev?style=social"></a>
 </div>
 
 ## Introduction
