@@ -131,9 +131,12 @@ export default function calculatorReducer(
   }
 }
 
-const evaluate = (state: AppState): string => {
-  const { currentOperand, previousOperand, operation } = state;
-
+const evaluate = ({
+  currentOperand,
+  previousOperand,
+  operation,
+}: AppState): string => {
+  // Take care of the trivial edge cases
   if (!previousOperand && currentOperand) {
     return currentOperand;
   }
@@ -168,6 +171,9 @@ const evaluate = (state: AppState): string => {
   }
 };
 
+///////////////////////
+// Inline unit tests //
+///////////////////////
 if (import.meta.vitest) {
   const { describe, expect, it } = import.meta.vitest;
 
@@ -190,6 +196,24 @@ if (import.meta.vitest) {
       }
     });
 
+    it("should work with one operand", () => {
+      const cases = [
+        ["1", "", "1"],
+        ["", "23", "23"],
+        ["", "-45", "-45"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            currentOperand: currentCase[0],
+            previousOperand: currentCase[1],
+            operation: ArithmeticOperation.addition,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+
     it("should work with positive integers", () => {
       const cases = [
         ["1", "1", "2"],
@@ -199,6 +223,48 @@ if (import.meta.vitest) {
         ["5", "8", "13"],
         ["13", "8", "21"],
         ["213149", "350174", "563323"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            currentOperand: currentCase[0],
+            previousOperand: currentCase[1],
+            operation: ArithmeticOperation.addition,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+
+    it("should work with negative integers", () => {
+      const cases = [
+        ["-1", "-1", "-2"],
+        ["-1", "-2", "-3"],
+        ["-2", "-3", "-5"],
+        ["-3", "-5", "-8"],
+        ["-5", "-8", "-13"],
+        ["-13", "-8", "-21"],
+        ["-213149", "-350174", "-563323"],
+      ];
+
+      for (const currentCase of cases) {
+        expect(
+          evaluate({
+            currentOperand: currentCase[0],
+            previousOperand: currentCase[1],
+            operation: ArithmeticOperation.addition,
+          })
+        ).toEqual(currentCase[2]);
+      }
+    });
+
+    it("should work with large integers", () => {
+      const cases = [
+        ["1000000000000", "1000000001000", "2000000001000"],
+        ["314987169384761", "174149871309", "315161319256070"],
+        ["143131498716", "3991464173", "147122962889"],
+        ["391846864", "-1283746918631", "-1283355071767"],
+        ["974125831765", "-1451451214", "972674380551"],
       ];
 
       for (const currentCase of cases) {
