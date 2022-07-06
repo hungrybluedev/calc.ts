@@ -136,11 +136,6 @@ const evaluate = ({
   currentOperand,
   operation,
 }: AppState): string => {
-  // Take care of the trivial edge cases
-  if (!currentOperand && previousOperand) {
-    return previousOperand;
-  }
-
   if (!currentOperand && !previousOperand) {
     return "0";
   }
@@ -376,6 +371,101 @@ if (import.meta.vitest) {
           })
         ).toEqual(currentCase[2]);
       }
+    });
+
+    describe("evaluate multiplication", () => {
+      it("should work with zero operands", () => {
+        const cases = [
+          ["", ""],
+          ["0", "0"],
+          ["0", ""],
+          ["", "0"],
+        ];
+        for (const currentCase of cases) {
+          expect(
+            evaluate({
+              previousOperand: currentCase[0],
+              currentOperand: currentCase[1],
+              operation: ArithmeticOperation.multiplication,
+            })
+          ).toEqual("0");
+        }
+      });
+
+      it("should work with one operand", () => {
+        const cases = [
+          ["1", "", "0"],
+          ["", "23", "0"],
+          ["", "-45", "0"],
+        ];
+
+        for (const currentCase of cases) {
+          expect(
+            evaluate({
+              previousOperand: currentCase[0],
+              currentOperand: currentCase[1],
+              operation: ArithmeticOperation.multiplication,
+            })
+          ).toEqual(currentCase[2]);
+        }
+      });
+
+      it("should work with positive integers", () => {
+        const cases = [
+          ["1", "1", "1"],
+          ["1", "2", "2"],
+          ["2", "3", "6"],
+          ["3", "5", "15"],
+          ["5", "8", "40"],
+          ["13", "8", "104"],
+          ["213149", "350174", "74639237926"],
+        ];
+
+        for (const currentCase of cases) {
+          expect(
+            evaluate({
+              previousOperand: currentCase[0],
+              currentOperand: currentCase[1],
+              operation: ArithmeticOperation.multiplication,
+            })
+          ).toEqual(currentCase[2]);
+        }
+      });
+      it("should work with negative integers", () => {
+        const cases = [
+          ["-1", "-1", "1"],
+          ["-1", "-2", "2"],
+          ["-2", "-3", "6"],
+          ["-3", "5", "-15"],
+          ["-3", "-5", "15"],
+        ];
+        for (const currentCase of cases) {
+          expect(
+            evaluate({
+              previousOperand: currentCase[0],
+              currentOperand: currentCase[1],
+              operation: ArithmeticOperation.multiplication,
+            })
+          ).toEqual(currentCase[2]);
+        }
+      });
+
+      it("should work with large integers", () => {
+        const cases = [
+          ["9847236", "2394761", "23581776730596"],
+          ["-5687454", "6754567985", "-38416294704560190"],
+          ["9813561", "3534141", "34682508286101"],
+        ];
+        for (const currentCase of cases) {
+          expect(
+            evaluate({
+              previousOperand: currentCase[0],
+              currentOperand: currentCase[1],
+              operation: ArithmeticOperation.multiplication,
+            })
+          ).toEqual(currentCase[2]);
+        }
+      });
     });
   });
 }
