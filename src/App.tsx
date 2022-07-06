@@ -7,6 +7,7 @@ import OperationButton from "./OperationButton";
 
 import calculatorReducer from "./logic";
 import { ActionType } from "./definitions";
+import { formatNumber } from "./format";
 
 function App() {
   const [{ currentOperand, previousOperand, opSymbol, operation }, dispatch] =
@@ -20,9 +21,9 @@ function App() {
     <div className="calculator-grid">
       <div className="output">
         <div className="previous-operand">
-          {previousOperand} {opSymbol}
+          {formatNumber(previousOperand)} {opSymbol}
         </div>
-        <div className="current-operand">{currentOperand}</div>
+        <div className="current-operand">{formatNumber(currentOperand)}</div>
       </div>
       <button
         className="span-two"
