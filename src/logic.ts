@@ -6,53 +6,64 @@ import {
   OP_MAP,
 } from "./definitions";
 
+const handleDecimalPoint = (state: AppState): AppState => {
+  if (state.currentOperand.includes(".")) {
+    // Do not add extra decimals if we already have a decimal in the current operand
+    return state;
+  } else {
+    // Add the decimal to the current operand
+    return {
+      ...state,
+      currentOperand: `${state.currentOperand}.`,
+    };
+  }
+};
+
+const handleZeroDigit = (state: AppState, digit: string): AppState => {
+  if (digit === "0") {
+    // Do not add extra zeros if we already have a zero in the current operand
+    return state;
+  } else {
+    // Replace the existing zero with the digit
+    return {
+      ...state,
+      currentOperand: digit,
+    };
+  }
+};
+
+const handleRegularDigit = (state: AppState, digit: string) => {
+  // Did we just finish an evaluation?
+  if (state.operation === ArithmeticOperation.evaluation) {
+    return {
+      ...state,
+      currentOperand: digit,
+      operation: undefined,
+    };
+  } else {
+    return {
+      ...state,
+      currentOperand: `${state.currentOperand || ""}${digit}`,
+    };
+  }
+};
+
 const handleDigitAddition = (
   state: AppState,
   { payload }: AppAction
 ): AppState => {
   // Handle decimal point first
   if (payload!.digit === ".") {
-    if (state.currentOperand.includes(".")) {
-      // Do not add extra decimals if we already have a decimal in the current operand
-      return state;
-    } else {
-      // Add the decimal to the current operand
-      return {
-        ...state,
-        currentOperand: `${state.currentOperand}.`,
-      };
-    }
+    return handleDecimalPoint(state);
   }
 
   // Handle zero digit
   if (state.currentOperand === "0") {
-    if (payload!.digit === "0") {
-      // Do not add extra zeros if we already have a zero in the current operand
-      return state;
-    } else {
-      // Replace the existing zero with the digit
-      return {
-        ...state,
-        currentOperand: payload!.digit,
-      };
-    }
+    return handleZeroDigit(state, payload!.digit);
   }
 
   // We now have a regular digit
-
-  // Did we just finish an evaluation?
-  if (state.operation === ArithmeticOperation.evaluation) {
-    return {
-      ...state,
-      currentOperand: payload!.digit,
-      operation: undefined,
-    };
-  } else {
-    return {
-      ...state,
-      currentOperand: `${state.currentOperand || ""}${payload!.digit}`,
-    };
-  }
+  return handleRegularDigit(state, payload!.digit);
 };
 
 const handleChooseOperation = (state: AppState, { payload }: AppAction) => {
