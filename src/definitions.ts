@@ -28,11 +28,13 @@ export enum ActionType {
   evaluate,
 }
 
+export interface AppPayload {
+  digit: string;
+  operation: string;
+  symbol: string;
+}
+
 export interface AppAction {
   type: ActionType;
-  payload?: {
-    digit: string;
-    operation: string;
-    symbol: string;
-  };
+  payload?: AppPayload;
 }
