@@ -1,6 +1,7 @@
 import {
   ActionType,
   AppAction,
+  AppPayload,
   AppState,
   ArithmeticOperation,
   OP_MAP,
@@ -67,46 +68,47 @@ const handleDigitAddition = (
   return handleRegularDigit(state, payload!.digit);
 };
 
+const handlePreviousOperandAbsent = (
+  state: AppState,
+  currentOperandAbsent: boolean,
+  payload?: AppPayload
+): AppState =>
+  currentOperandAbsent
+    ? {
+        ...state,
+        opSymbol: payload!.symbol,
+        operation: OP_MAP.get(payload!.operation),
+      }
+    : {
+        ...state,
+        previousOperand: evaluate(state),
+        opSymbol: payload!.symbol,
+        operation: OP_MAP.get(payload!.operation),
+        currentOperand: "0",
+      };
+
+const handlePreviousOperandPresent = (
+  state: AppState,
+  currentOperandAbsent: boolean,
+  payload?: AppPayload
+): AppState =>
+  currentOperandAbsent
+    ? state
+    : {
+        ...state,
+        previousOperand: state.currentOperand,
+        currentOperand: "0",
+        opSymbol: payload!.symbol,
+        operation: OP_MAP.get(payload!.operation),
+      };
+
 const handleChooseOperation = (state: AppState, { payload }: AppAction) => {
-  if (
-    !state.previousOperand &&
-    (!state.currentOperand || state.currentOperand === "0")
-  ) {
-    // Do not allow operations on empty operands
-    return state;
-  }
+  const currentOperandAbsent =
+    !state.currentOperand || state.currentOperand === "0";
 
-  if (
-    state.previousOperand &&
-    (!state.currentOperand || state.currentOperand === "0")
-  ) {
-    // Replace the previous operation with the new operation
-    return {
-      ...state,
-      opSymbol: payload!.symbol,
-      operation: OP_MAP.get(payload!.operation),
-    };
-  }
-
-  if (!state.previousOperand) {
-    // We have a current operand and no previous operand
-
-    return {
-      ...state,
-      previousOperand: state.currentOperand,
-      currentOperand: "0",
-      opSymbol: payload!.symbol,
-      operation: OP_MAP.get(payload!.operation),
-    };
-  }
-
-  return {
-    ...state,
-    previousOperand: evaluate(state),
-    opSymbol: payload!.symbol,
-    operation: OP_MAP.get(payload!.operation),
-    currentOperand: "0",
-  };
+  return state.previousOperand
+    ? handlePreviousOperandAbsent(state, currentOperandAbsent, payload)
+    : handlePreviousOperandPresent(state, currentOperandAbsent, payload);
 };
 
 const handleClear = (): AppState => ({
