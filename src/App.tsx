@@ -37,6 +37,25 @@ const CalculatorFooter = () => (
 );
 
 const CalculatorButtons = (dispatch: Dispatch<AppAction>) => [
+  <button
+    className="span-two"
+    onClick={() =>
+      dispatch({
+        type: ActionType.clear,
+      })
+    }
+  >
+    AC
+  </button>,
+  <button
+    onClick={() =>
+      dispatch({
+        type: ActionType.delete_digit,
+      })
+    }
+  >
+    DEL
+  </button>,
   <OperationButton operation="/" symbol="&#247;" dispatch={dispatch} />,
   <DigitButton dispatch={dispatch} digit="1" />,
   <DigitButton dispatch={dispatch} digit="2" />,
@@ -81,25 +100,6 @@ const App = () => {
         previousOperand={previousOperand}
         opSymbol={opSymbol}
       />
-      <button
-        className="span-two"
-        onClick={() =>
-          dispatch({
-            type: ActionType.clear,
-          })
-        }
-      >
-        AC
-      </button>
-      <button
-        onClick={() =>
-          dispatch({
-            type: ActionType.delete_digit,
-          })
-        }
-      >
-        DEL
-      </button>
       {CalculatorButtons(dispatch)}
       <CalculatorFooter />
     </div>
