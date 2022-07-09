@@ -5,7 +5,7 @@ import "./App.css";
 import DigitButton from "./DigitButton";
 import OperationButton from "./OperationButton";
 
-import calculatorReducer from "./logic";
+import calculatorReducer from "./stateLogic";
 import { ActionType } from "./definitions";
 import { formatNumber } from "./format";
 
