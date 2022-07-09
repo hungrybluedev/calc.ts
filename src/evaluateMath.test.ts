@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { expect, it, test } from "vitest";
 import { ArithmeticOperation } from "./definitions";
 import evaluate from "./evaluateMath";
 
@@ -117,57 +117,14 @@ const positiveIntegerCases: Array<EvaluationTestCase> = [
   },
 ];
 
-const negativeIntegerCases: Array<EvaluationTestCase> = [
-  {
-    previousOperand: "-1",
-    currentOperand: "-1",
-    sum: "-2",
-    difference: "0",
-    product: "1",
-  },
-  {
-    previousOperand: "-1",
-    currentOperand: "-2",
-    sum: "-3",
-    difference: "1",
-    product: "2",
-  },
-  {
-    previousOperand: "-2",
-    currentOperand: "-3",
-    sum: "-5",
-    difference: "1",
-    product: "6",
-  },
-  {
-    previousOperand: "-3",
-    currentOperand: "-5",
-    sum: "-8",
-    difference: "2",
-    product: "15",
-  },
-  {
-    previousOperand: "-5",
-    currentOperand: "-8",
-    sum: "-13",
-    difference: "3",
-    product: "40",
-  },
-  {
-    previousOperand: "-13",
-    currentOperand: "-8",
-    sum: "-21",
-    difference: "-5",
-    product: "104",
-  },
-  {
-    previousOperand: "-213149",
-    currentOperand: "-350174",
-    sum: "-563323",
-    difference: "137025",
-    product: "74639237926",
-  },
-];
+const negativeIntegerCases: Array<EvaluationTestCase> =
+  positiveIntegerCases.map((testCase) => ({
+    previousOperand: (-parseFloat(testCase.previousOperand)).toString(),
+    currentOperand: (-parseFloat(testCase.currentOperand)).toString(),
+    sum: (-parseFloat(testCase.sum)).toString(),
+    difference: (-parseFloat(testCase.difference)).toString(),
+    product: testCase.product,
+  }));
 
 const largeIntegerCases: Array<EvaluationTestCase> = [
   {
