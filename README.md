@@ -8,8 +8,8 @@
 </div>
 
 <div align="center" style="align: center; margin: 20px auto;">
-<a href="https://codeclimate.com/github/hungrybluedev/calc.ts"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/hungrybluedev/calc.ts"></a>
-<a href="https://codeclimate.com/github/hungrybluedev/calc.ts"><img alt="Code Climate coverage" src="https://img.shields.io/codeclimate/coverage/hungrybluedev/calc.ts"></a>
+<a href="https://codeclimate.com/github/hungrybluedev/calc.ts/maintainability"><img src="https://api.codeclimate.com/v1/badges/c5c23c5e9a382fe83407/maintainability" /></a>
+<a href="https://codeclimate.com/github/hungrybluedev/calc.ts/test_coverage"><img src="https://api.codeclimate.com/v1/badges/c5c23c5e9a382fe83407/test_coverage" /></a>
 <a href="https://github.com/hungrybluedev/calc.ts/issues">
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/hungrybluedev/calc.ts"></a>
 <a href="https://github.com/hungrybluedev/calc.ts/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/hungrybluedev/calc.ts"></a>
